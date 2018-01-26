@@ -1,39 +1,19 @@
 package com.java_qa.task2;
 
-import java.util.Scanner;
-
 import static java.lang.Math.*;
 
 public class Point {
-    Scanner in = new Scanner(System.in);
 
-    private double x;
-    private double y;
 
-    public double getX() {
-        return x;
-    }
+    public double x;
+    public double y;
 
-    public void setX(double x) {
+    public Point(double x, double y) {
         this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
         this.y = y;
     }
 
     public double distance(Point point) {
-        return sqrt(pow((point.getX() - this.getX()),2) + pow((point.getY() - this.getY()),2));
-    }
-
-    public void enterPosition(String point) {
-        System.out.print("Enter position (x and y) of the " + point + " point: ");
-        this.setX(in.nextDouble());
-        this.setY(in.nextDouble());
-        System.out.println();
+        return sqrt(pow((point.x - this.x),2) + pow((point.y - this.y),2));
     }
 }
