@@ -26,10 +26,11 @@ proguard/
 *.iml
 *.ipr
 *.iws
-.idea/
+
 
 #Gradle
 .gradletasknamecache
 .gradle/
 build/
 bin/
+.idea/workspace.xml
