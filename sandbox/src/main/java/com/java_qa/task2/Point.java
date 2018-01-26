@@ -1,8 +1,12 @@
 package com.java_qa.task2;
 
+import java.util.Scanner;
+
 import static java.lang.Math.*;
 
 public class Point {
+    Scanner in = new Scanner(System.in);
+
     private double x;
     private double y;
 
@@ -22,7 +26,14 @@ public class Point {
         this.y = y;
     }
 
-    public static double distance(Point p1, Point p2) {
-        return sqrt(pow((p2.getX() - p1.getX()),2) + pow((p2.getY() - p1.getY()),2));
+    public double distance(Point point) {
+        return sqrt(pow((point.getX() - this.getX()),2) + pow((point.getY() - this.getY()),2));
+    }
+
+    public void enterPosition(String point) {
+        System.out.print("Enter position (x and y) of the " + point + " point: ");
+        this.setX(in.nextDouble());
+        this.setY(in.nextDouble());
+        System.out.println();
     }
 }
