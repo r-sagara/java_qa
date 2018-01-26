@@ -12,8 +12,8 @@ public class Main {
         p1.enterPosition("p1");
         p2.enterPosition("p2");
 
-        System.out.println("The distance between there points is: " + p1.distance(p2));
-        System.out.println("The distance between there points is: " + distance(p1, p2));
+        System.out.println("The distance between these points is: " + p1.distance(p2));
+        System.out.println("The distance between these points is: " + distance(p1, p2));
     }
 
     public static double distance(Point p1, Point p2) {
