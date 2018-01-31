@@ -34,3 +34,4 @@ proguard/
 build/
 bin/
 .idea/workspace.xml
+.idea/libraries/
