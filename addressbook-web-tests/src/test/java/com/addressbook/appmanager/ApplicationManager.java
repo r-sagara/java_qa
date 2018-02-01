@@ -1,46 +1,39 @@
 package com.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 
-    private final GroupHelper groupHelper = new GroupHelper();
+    FirefoxDriver driver;
+    private NavigationHelper navigationHelper;
+    private GroupHelper groupHelper;
+    private SessionHelper sessionHelper;
 
     public void init() {
-        groupHelper.driver = new FirefoxDriver();
-        groupHelper.driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        groupHelper.driver.get("http://localhost/addressbook/");
-        login("admin", "secret");
-    }
-
-    private void login(String username, String password) {
-        groupHelper.driver.findElement(By.name("user")).sendKeys(username);
-        groupHelper.driver.findElement(By.name("pass")).sendKeys(password);
-        groupHelper.driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
-    }
-
-    public void gotoGroupPage() {
-        groupHelper.driver.findElement(By.linkText("GROUPS")).click();
+        driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver.get("http://localhost/addressbook/");
+        groupHelper = new GroupHelper(driver);
+        navigationHelper = new NavigationHelper(driver);
+        sessionHelper = new SessionHelper(driver);
+        sessionHelper.login("admin", "secret");
     }
 
     public void stop() {
-        groupHelper.driver.quit();
-    }
-
-    public boolean isAlertPresent() {
-        try {
-            groupHelper.driver.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
+        driver.quit();
     }
 
     public GroupHelper getGroupHelper() {
         return groupHelper;
+    }
+
+    public NavigationHelper getNavigationHelper() {
+        return navigationHelper;
+    }
+
+    public void gotoGroupPage() {
+        navigationHelper.gotoGroupPage();
     }
 }
