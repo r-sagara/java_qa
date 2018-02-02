@@ -1,6 +1,7 @@
-package com.addressbook.tests;
+package com.addressbook.tests.group;
 
 import com.addressbook.model.GroupData;
+import com.addressbook.tests.TestBase;
 import org.testng.annotations.Test;
 
 public class GroupModificationTests extends TestBase {
@@ -12,7 +13,7 @@ public class GroupModificationTests extends TestBase {
         app.getGroupHelper().initGroupModification();
         app.getGroupHelper().fillGroupForm(new GroupData("name1", "header1", "footer1"));
         app.getGroupHelper().submitGroupModification();
-        app.getGroupHelper().returnToGroupPage();
+        app.getNavigationHelper().gotoGroupPage();
     }
 }
 
