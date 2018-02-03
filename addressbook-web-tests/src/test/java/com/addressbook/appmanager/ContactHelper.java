@@ -1,6 +1,7 @@
 package com.addressbook.appmanager;
 
 import com.addressbook.model.ContactData;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
@@ -8,6 +9,10 @@ public class ContactHelper extends HelperBase {
 
     public ContactHelper(FirefoxDriver driver) {
         super(driver);
+    }
+
+    public void initContactCreation() {
+
     }
 
     public void submitContactCreation() {
@@ -23,7 +28,11 @@ public class ContactHelper extends HelperBase {
     }
 
     public void deleteSelectedContacts() {
-        click(By.name("delete"));
+        click(By.xpath("//input[@value='DELETE']"));
+    }
+
+    public void submitAlertMessage() {
+        submitAlert();
     }
 
     public void selectContact() {
@@ -31,10 +40,11 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initContactModification() {
-        click(By.name("edit"));
+        click(By.cssSelector("img[alt='EDIT']"));
     }
 
     public void submitContactModification() {
         click(By.name("update"));
     }
+
 }

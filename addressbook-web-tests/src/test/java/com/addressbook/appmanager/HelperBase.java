@@ -1,5 +1,6 @@
 package com.addressbook.appmanager;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -7,6 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class HelperBase {
 
     protected FirefoxDriver driver;
+    protected boolean acceptNextAlert = true;
 
     public HelperBase(FirefoxDriver driver) {
         this.driver = driver;
@@ -27,6 +29,15 @@ public class HelperBase {
             return true;
         } catch (NoAlertPresentException e) {
             return false;
+        }
+    }
+
+    protected void submitAlert() {
+        Alert alert = driver.switchTo().alert();
+        if (acceptNextAlert) {
+            alert.accept();
+        } else {
+            alert.dismiss();
         }
     }
 }
