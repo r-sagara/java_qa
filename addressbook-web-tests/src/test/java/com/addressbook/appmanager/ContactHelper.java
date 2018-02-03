@@ -12,7 +12,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initContactCreation() {
-
+        click(By.linkText("ADD_NEW"));
     }
 
     public void submitContactCreation() {

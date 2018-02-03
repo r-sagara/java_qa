@@ -8,7 +8,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class HelperBase {
 
     protected FirefoxDriver driver;
-    protected boolean acceptNextAlert = true;
 
     public HelperBase(FirefoxDriver driver) {
         this.driver = driver;
@@ -33,11 +32,6 @@ public class HelperBase {
     }
 
     protected void submitAlert() {
-        Alert alert = driver.switchTo().alert();
-        if (acceptNextAlert) {
-            alert.accept();
-        } else {
-            alert.dismiss();
-        }
+        driver.switchTo().alert().accept();
     }
 }
