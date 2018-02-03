@@ -28,10 +28,10 @@ public class ContactData {
     private String phoneHomeSecondary;
     private String notes;
 
-    public ContactData(String firstName, String lastName, String photo, String phoneHome, String email) {
+    public ContactData(String firstName, String lastName, String phoneHome, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.photo = photo;
+        //this.photo = photo;
         this.phoneHome = phoneHome;
         this.email = email;
     }

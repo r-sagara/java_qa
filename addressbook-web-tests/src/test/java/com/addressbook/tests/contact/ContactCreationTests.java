@@ -13,7 +13,7 @@ public class ContactCreationTests extends TestBase {
         app.getContactHelper().fillContactForm(new ContactData(
                 "Dmitriy",
                 "Monatique",
-                "C:\\Users\\rkush\\Desktop\\ForTest\\68982_0.jpg",
+                //"C:\\Users\\rkush\\Desktop\\ForTest\\68982_0.jpg",
                 "+380732039090",
                 "dima.monatik@gmail.com"));
         app.getContactHelper().submitContactCreation();
