@@ -1,15 +1,14 @@
 package com.addressbook.appmanager;
 
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.WebDriver;
 
 public class HelperBase {
 
-    protected FirefoxDriver driver;
+    protected WebDriver driver;
 
-    public HelperBase(FirefoxDriver driver) {
+    public HelperBase(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -18,8 +17,14 @@ public class HelperBase {
     }
 
     protected void type(By locator, String name) {
-        driver.findElement(locator).clear();
-        driver.findElement(locator).sendKeys(name);
+        click(locator);
+        if (name != null) {
+            String existingText = driver.findElement(locator).getAttribute("value");
+            if(!name.equals(existingText)) {
+                driver.findElement(locator).clear();
+                driver.findElement(locator).sendKeys(name);
+            }
+        }
     }
 
     public boolean isAlertPresent() {
