@@ -15,7 +15,9 @@ public class ContactCreationTests extends TestBase {
                 "Monatique",
                 //"C:\\Users\\rkush\\Desktop\\ForTest\\68982_0.jpg",
                 "+380732039090",
-                null));
+                null,
+                "test1"),
+                true);
         app.getContactHelper().submitContactCreation();
         app.getNavigationHelper().gotoHomePage();
     }
