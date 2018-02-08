@@ -1,8 +1,8 @@
 package com.addressbook.appmanager;
 
 import com.addressbook.model.ContactData;
+import com.addressbook.model.GroupData;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
@@ -24,7 +24,6 @@ public class ContactHelper extends HelperBase {
     public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("lastname"), contactData.getLastName());
-        //type(By.name("photo"), contactData.getPhoto());
         type(By.name("home"), contactData.getPhoneHome());
         type(By.name("email"), contactData.getEmail());
         if (creation) {
@@ -54,4 +53,26 @@ public class ContactHelper extends HelperBase {
         click(By.name("update"));
     }
 
+    public boolean isThereContact() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public void createContact(ContactData contact) {
+        initContactCreation();
+        if(!isThereItemInGroupList(By.name("new_group"),contact.getGroup())) {
+            new GroupHelper(driver).createGroup(new GroupData(contact.getGroup(),null,null));
+            initContactCreation();
+        }
+        fillContactForm(contact, true);
+        submitContactCreation();
+        returnToContactPage();
+    }
+
+    private void returnToContactPage() {
+        click(By.linkText("home page"));
+    }
+
+    public boolean isThereItemInGroupList(By locator, String group) {
+        return isItemPresentInSelect(locator, group);
+    }
 }

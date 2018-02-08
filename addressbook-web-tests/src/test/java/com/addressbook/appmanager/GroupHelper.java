@@ -3,6 +3,9 @@ package com.addressbook.appmanager;
 import com.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.stream.Collectors;
 
 public class GroupHelper extends HelperBase {
 
@@ -40,13 +43,38 @@ public class GroupHelper extends HelperBase {
         click(By.name("update"));
     }
 
+    public void returnToGroupPage() {
+        click(By.linkText("group page"));
+    }
+
     public void createGroup(GroupData group) {
+        if (!isElementPresent(By.name("new")) || !driver.findElement(By.tagName("h1")).getText().equals("GROUPS")) {
+            click(By.linkText("GROUPS"));
+        }
         initGroupCreation();
         fillGroupForm(group);
         submitGroupCreation();
+        returnToGroupPage();
     }
 
     public boolean isThereGroup() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public boolean isThereGroupByName(String groupName) {
+        return isElementPresent(By.xpath("//input[@title='Select (test1)']")); //TODO
+    }
+
+    public boolean isThereGroupByName1(String group) {
+        for(WebElement element : driver.findElements(By.className("group"))) {
+            if(element.getText().equals(group)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isThereGroupByName2(String group) {
+        return driver.findElements(By.className("group")).stream().map(WebElement::getText).collect(Collectors.toList()).contains(group);
     }
 }
