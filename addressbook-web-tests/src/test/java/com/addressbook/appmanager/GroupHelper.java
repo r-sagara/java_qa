@@ -77,4 +77,8 @@ public class GroupHelper extends HelperBase {
     public boolean isThereGroupByName2(String group) {
         return driver.findElements(By.className("group")).stream().map(WebElement::getText).collect(Collectors.toList()).contains(group);
     }
+
+    public int getGroupCount() {
+        return driver.findElements(By.name("selected[]")).size();
+    }
 }
