@@ -4,8 +4,12 @@ import com.addressbook.model.ContactData;
 import com.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
 
@@ -24,6 +28,7 @@ public class ContactHelper extends HelperBase {
     public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("lastname"), contactData.getLastName());
+        type(By.name("address"),contactData.getAddress());
         type(By.name("home"), contactData.getPhoneHome());
         type(By.name("email"), contactData.getEmail());
         if (creation) {
@@ -41,8 +46,8 @@ public class ContactHelper extends HelperBase {
         submitAlert();
     }
 
-    public void selectContact() {
-        click(By.name("selected[]"));
+    public void selectContact(int index) {
+        driver.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void initContactModification() {
@@ -68,11 +73,26 @@ public class ContactHelper extends HelperBase {
         returnToContactPage();
     }
 
-    private void returnToContactPage() {
+    public void returnToContactPage() {
         click(By.linkText("home page"));
     }
 
     public boolean isThereItemInGroupList(By locator, String group) {
         return isItemPresentInSelect(locator, group);
+    }
+
+    public List<ContactData> getContactList() {
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> elements = driver.findElement(By.id("maintable")).findElements(By.name("entry"));
+        for (WebElement element : elements) {
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+            String name1 = element.findElement(By.xpath("td[3]")).getText();
+            String name2 = element.findElement(By.xpath("td[2]")).getText();
+            String address = element.findElement(By.xpath("td[4]")).getText();
+            String email = element.findElement(By.xpath("td[5]")).getText();
+            String phone = element.findElement(By.xpath("td[6]")).getText();
+            contacts.add(new ContactData(id, name1, name2, address, email, phone,null));
+        }
+        return contacts;
     }
 }

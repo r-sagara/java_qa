@@ -1,37 +1,55 @@
 package com.addressbook.model;
 
+import java.util.Objects;
+
 public class ContactData {
-    private final String firstName;
-    private String middleName;
+    private int id;
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactData that = (ContactData) o;
+        return Objects.equals(firstName, that.firstName) &&
+                Objects.equals(lastName, that.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName);
+    }
+
+    private String firstName;
     private String lastName;
-    private String nickName;
-    private String photo;
-    private String title;
-    private String company;
     private String address;
-
     private String phoneHome;
-    private String phoneMobile;
-    private String phoneWork;
-    private String fax;
-
     private String email;
-    private String email2;
-    private String email3;
-    private String homepage;
-
-    private String birthday;
-    private String anniversary;
     private String group;
 
-    private String addressSecondary;
-    private String phoneHomeSecondary;
-    private String notes;
-
-    public ContactData(String firstName, String lastName, String phoneHome, String email, String group) {
+    public ContactData(String firstName, String lastName, String address, String phoneHome, String email, String group) {
+        this.id = Integer.MAX_VALUE;
         this.firstName = firstName;
         this.lastName = lastName;
-        //this.photo = photo;
+        this.address = address;
+        this.phoneHome = phoneHome;
+        this.email = email;
+        this.group = group;
+    }
+
+    public ContactData(int id, String firstName, String lastName, String address, String phoneHome, String email, String group) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
         this.phoneHome = phoneHome;
         this.email = email;
         this.group = group;
@@ -45,8 +63,8 @@ public class ContactData {
         return lastName;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getAddress() {
+        return address;
     }
 
     public String getPhoneHome() {
@@ -59,5 +77,9 @@ public class ContactData {
 
     public String getGroup() {
         return group;
+    }
+
+    public int getId() {
+        return id;
     }
 }

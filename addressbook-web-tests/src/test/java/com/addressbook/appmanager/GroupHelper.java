@@ -64,15 +64,6 @@ public class GroupHelper extends HelperBase {
     }
 
     public boolean isThereGroupByName(String group) {
-        for(WebElement element : driver.findElements(By.className("group"))) {
-            if(element.getText().equals(group)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isThereGroupByName1(String group) {
         return driver.findElements(By.className("group")).stream().map(WebElement::getText).collect(Collectors.toList()).contains(group);
     }
 
@@ -81,11 +72,12 @@ public class GroupHelper extends HelperBase {
     }
 
     public List<GroupData> getGroupList() {
-        List<GroupData> groups = new ArrayList<GroupData>();
+        List<GroupData> groups = new ArrayList<>();
         List<WebElement> elements = driver.findElements(By.cssSelector("span.group"));
         for (WebElement element : elements) {
             String name = element.getText();
-            GroupData group = new GroupData(name,null,null);
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            GroupData group = new GroupData(id, name,null,null);
             groups.add(group);
         }
         return groups;
