@@ -28,7 +28,7 @@ public class ContactHelper extends HelperBase {
     public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirstName());
         type(By.name("lastname"), contactData.getLastName());
-        type(By.name("address"),contactData.getAddress());
+        type(By.name("address"), contactData.getAddress());
         type(By.name("home"), contactData.getPhoneHome());
         type(By.name("email"), contactData.getEmail());
         if (creation) {
@@ -64,7 +64,7 @@ public class ContactHelper extends HelperBase {
 
     public void create(ContactData contact) {
         initContactCreation();
-        if(!isThereItemInGroupList(By.name("new_group"),contact.getGroup())) {
+        if (!isThereItemInGroupList(By.name("new_group"), contact.getGroup())) {
             new GroupHelper(driver).create(new GroupData().withName(contact.getGroup()));
             initContactCreation();
         }
@@ -76,7 +76,7 @@ public class ContactHelper extends HelperBase {
     public void modify(int index, ContactData contact) {
         selectContact(index);
         initContactModification();
-        fillContactForm(contact,false);
+        fillContactForm(contact, false);
         submitContactModification();
         returnToContactPage();
     }
