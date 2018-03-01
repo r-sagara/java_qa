@@ -3,6 +3,7 @@ package com.addressbook.tests.contact;
 import com.addressbook.model.ContactData;
 import com.addressbook.tests.TestBase;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.Comparator;
@@ -10,42 +11,36 @@ import java.util.List;
 
 public class ContactModificationTests extends TestBase {
 
+    @BeforeMethod
+    public void ensurePreconditions() {
+        app.goTo().homePage();
+        if(app.contacts().list().size() == 0) {
+            app.contacts().create(new ContactData().withFirstName("Dmitriy")
+                    .withLastName("Monatique").withAddress("Boulevard of Hearts, 47")
+                    .withPhoneHome("+380732039090").withEmail("d.monatik@gmail.com").withGroup("test1"));
+        }
+    }
+
     @Test
     public void testGroupModification() {
-        app.getNavigationHelper().gotoHomePage();
-        if(!app.getContactHelper().isThereContact()) {
-            app.getContactHelper().createContact(new ContactData(
-                    "Dmitriy",
-                    "Monatique",
-                    "Boulevard of Hearts, 44",
-                    "+380732039090",
-                    "dima.monatique@gmail.com",
-                    "test1"));
-        }
-        List<ContactData> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contacts().list();
+        int index = before.size() - 1;
 
-        app.getContactHelper().selectContact(before.size() - 1);
-        app.getContactHelper().initContactModification();
-        ContactData contact = new ContactData(
-                "Dima",
-                "MONATIK",
-                "DM Street, 33",
-                "+380992039090",
-                "d.monatik@gmail.com",
-                null);
-        app.getContactHelper().fillContactForm(contact,false);
-        app.getContactHelper().submitContactModification();
-        app.getNavigationHelper().gotoHomePage();
+        ContactData contact = new ContactData()
+                .withId(before.get(index).getId()).withFirstName("Dima").withLastName("MONATIK")
+                .withAddress("DM Street, 33").withPhoneHome("+380992039090").withEmail("d.monatik@gmail.com");
 
-        before.remove(before.size() - 1);
+        app.contacts().modify(index, contact);
+
+        before.remove(index);
         before.add(contact);
 
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.contacts().list();
 
         Comparator<ContactData> byId = Comparator.comparingInt(ContactData::getId);
         before.sort(byId);
         after.sort(byId);
 
-        Assert.assertEquals(before,after);
+        Assert.assertEquals(before, after);
     }
 }

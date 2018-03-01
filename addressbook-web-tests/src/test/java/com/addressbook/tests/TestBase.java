@@ -1,20 +1,21 @@
 package com.addressbook.tests;
 
 import com.addressbook.appmanager.ApplicationManager;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterSuite;
 import org.openqa.selenium.remote.*;
+
+import org.testng.annotations.BeforeSuite;
 
 public class TestBase {
 
-    protected final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
+    protected static final ApplicationManager app = new ApplicationManager(BrowserType.CHROME);
 
-    @BeforeClass
+    @BeforeSuite
     public void setUp() {
         app.init();
     }
 
-    @AfterClass
+    @AfterSuite
     public void tearDown() {
         app.stop();
     }

@@ -13,23 +13,19 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void testContactCreation() {
 
-        ContactData contact = new ContactData(
-                "Dmitriy",
-                "Monatique",
-                "Boulevard of Hearts, 47",
-                "+380732039090",
-                "d.monatik@gmail.com",
-                "test2");
-        app.getNavigationHelper().gotoHomePage();
+        ContactData contact = new ContactData().withFirstName("Dmitriy")
+                .withLastName("Monatique").withAddress("Boulevard of Hearts, 47")
+                .withPhoneHome("+380732039090").withEmail("d.monatik@gmail.com").withGroup("test2");
+        app.goTo().homePage();
 
-        List<ContactData> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contacts().list();
 
-        app.getContactHelper().createContact(contact);
+        app.contacts().create(contact);
         before.add(contact);
 
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().homePage();
 
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> after = app.contacts().list();
 
         Comparator<ContactData> byId = Comparator.comparingInt(ContactData::getId);
         before.sort(byId);

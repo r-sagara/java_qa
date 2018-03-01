@@ -62,14 +62,22 @@ public class ContactHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         initContactCreation();
         if(!isThereItemInGroupList(By.name("new_group"),contact.getGroup())) {
-            new GroupHelper(driver).createGroup(new GroupData(contact.getGroup(),null,null));
+            new GroupHelper(driver).create(new GroupData().withName(contact.getGroup()));
             initContactCreation();
         }
         fillContactForm(contact, true);
         submitContactCreation();
+        returnToContactPage();
+    }
+
+    public void modify(int index, ContactData contact) {
+        selectContact(index);
+        initContactModification();
+        fillContactForm(contact,false);
+        submitContactModification();
         returnToContactPage();
     }
 
@@ -81,7 +89,7 @@ public class ContactHelper extends HelperBase {
         return isItemPresentInSelect(locator, group);
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> elements = driver.findElement(By.id("maintable")).findElements(By.name("entry"));
         for (WebElement element : elements) {
@@ -91,7 +99,9 @@ public class ContactHelper extends HelperBase {
             String address = element.findElement(By.xpath("td[4]")).getText();
             String email = element.findElement(By.xpath("td[5]")).getText();
             String phone = element.findElement(By.xpath("td[6]")).getText();
-            contacts.add(new ContactData(id, name1, name2, address, email, phone,null));
+            contacts.add(new ContactData()
+                    .withId(id).withFirstName(name1).withLastName(name2)
+                    .withAddress(address).withEmail(email).withPhoneHome(phone));
         }
         return contacts;
     }
